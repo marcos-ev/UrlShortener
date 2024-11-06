@@ -1,0 +1,41 @@
+﻿@model IEnumerable<urlshorter.Models.AccessLog>
+
+@{
+    ViewData["Title"] = "Visualização de Acessos para URLs Encurtadas";
+}
+
+<h2>Visualização de Acessos para URLs Encurtadas</h2>
+
+<form method="get" action="">
+    <label for="urlId">Filtrar por URL ID:</label>
+    <input type="number" id="urlId" name="urlId" value="" />
+    <button type="submit">Filtrar</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Data de Acesso</th>
+            <th>Dispositivo</th>
+            <th>Sistema Operacional</th>
+            <th>Navegador</th>
+            <th>Endereço IP</th>
+            <th>URL Original</th>
+            <th>URL Encurtada</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>@log.AccessedAt</td>
+                <td>@log.DeviceType</td>
+                <td>@log.OS</td>
+                <td>@log.Browser</td>
+                <td>@log.IpAddress</td>
+                <td>@log.Url?.OriginalUrl</td>
+                <td>@($"https://yourdomain.com/{log.Url?.ShortCode}")</td> 
+            </tr>
+        }
+    </tbody>
+</table>
