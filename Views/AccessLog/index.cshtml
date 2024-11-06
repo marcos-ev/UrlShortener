@@ -4,38 +4,139 @@
     ViewData["Title"] = "Visualização de Acessos para URLs Encurtadas";
 }
 
-<h2>Visualização de Acessos para URLs Encurtadas</h2>
-
-<form method="get" action="">
-    <label for="urlId">Filtrar por URL ID:</label>
-    <input type="number" id="urlId" name="urlId" value="" />
-    <button type="submit">Filtrar</button>
-</form>
-
-<table>
-    <thead>
-        <tr>
-            <th>Data de Acesso</th>
-            <th>Dispositivo</th>
-            <th>Sistema Operacional</th>
-            <th>Navegador</th>
-            <th>Endereço IP</th>
-            <th>URL Original</th>
-            <th>URL Encurtada</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var log in Model)
-        {
-            <tr>
-                <td>@log.AccessedAt</td>
-                <td>@log.DeviceType</td>
-                <td>@log.OS</td>
-                <td>@log.Browser</td>
-                <td>@log.IpAddress</td>
-                <td>@log.Url?.OriginalUrl</td>
-                <td>@($"https://yourdomain.com/{log.Url?.ShortCode}")</td> 
-            </tr>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualização de Acessos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
         }
-    </tbody>
-</table>
+
+        h2 {
+            color: #343a40;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background-color: #343a40;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .url-link {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .url-link:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <h2>Visualização de Acessos para URLs Encurtadas</h2>
+
+    <form method="get" action="">
+        <label for="urlId">Filtrar por URL ID:</label>
+        <input type="number" id="urlId" name="urlId" placeholder="Digite o ID da URL" />
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>URL ID</th>
+                <th>Data de Acesso</th>
+                <th>Dispositivo</th>
+                <th>Sistema Operacional</th>
+                <th>Navegador</th>
+                <th>Endereço IP</th>
+                <th>URL Original</th>
+                <th>URL Encurtada</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model)
+            {
+                <tr>
+                    <td>@log.UrlId</td>
+                    <td>@log.AccessedAt.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    <td>@log.DeviceType</td>
+                    <td>@log.OS</td>
+                    <td>@log.Browser</td>
+                    <td>@log.IpAddress</td>
+                    <td>
+                        <a href="@log.Url?.OriginalUrl" class="url-link" target="_blank">@log.Url?.OriginalUrl</a>
+                    </td>
+                    <td>
+                        <a href="https://yourdomain.com/@log.Url?.ShortCode" class="url-link" target="_blank">
+                            https://yourdomain.com/@log.Url?.ShortCode
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
