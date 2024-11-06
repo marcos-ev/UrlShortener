@@ -17,6 +17,10 @@ Este projeto foi desenvolvido como parte de um teste de desenvolvedor, com o obj
 
 ### Screenshots e Demonstração
 
+### DB
+
+![Captura de Tela da Interface](./db.png)
+
 #### Interface de Visualização
 
 ![Captura de Tela da Interface](./tela.png)
