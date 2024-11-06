@@ -2,6 +2,6 @@
 {
     public class ShortenUrlRequest
     {
-        public string OriginalUrl { get; set; }
+        public required string OriginalUrl { get; set; }
     }
 }

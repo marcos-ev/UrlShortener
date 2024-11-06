@@ -21,7 +21,7 @@ namespace urlshorter.Controllers
                 .Include(log => log.Url)
                 .AsQueryable();
 
-            if (urlId.HasValue)
+            if (urlId.HasValue && urlId > 0)
             {
                 logs = logs.Where(log => log.UrlId == urlId.Value);
             }

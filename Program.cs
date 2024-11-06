@@ -1,16 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using urlshorter.Data;
 using urlshorter.Services;
-using urlshorter.Handlers;
+using urlshorter.Handlers; // Namespace correto para BasicAuthenticationHandler
 using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configurações de autenticação
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 builder.Services.AddAuthorization();
 
+// Adiciona suporte para controladores com views (MVC)
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>

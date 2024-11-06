@@ -17,6 +17,13 @@ namespace urlshorter.Services
 
         public async Task<Url> CreateShortUrlAsync(string originalUrl)
         {
+            if (string.IsNullOrWhiteSpace(originalUrl))
+                throw new ArgumentException("A URL original não pode ser nula ou vazia.");
+
+            var existingUrl = await _context.Urls.FirstOrDefaultAsync(u => u.OriginalUrl == originalUrl);
+            if (existingUrl != null)
+                return existingUrl;
+
             var shortCode = GenerateShortCode();
             var url = new Url { OriginalUrl = originalUrl, ShortCode = shortCode };
             _context.Urls.Add(url);
@@ -29,11 +36,20 @@ namespace urlshorter.Services
             return await _context.Urls.FirstOrDefaultAsync(u => u.ShortCode == shortCode);
         }
 
+        public async Task<AccessLog?> GetLastAccessLogAsync(int urlId)
+        {
+            return await _context.AccessLogs
+                .Where(log => log.UrlId == urlId)
+                .OrderByDescending(log => log.AccessedAt)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task LogAccessAsync(int urlId, string deviceType, string os, string browser, string ipAddress)
         {
             var accessLog = new AccessLog
             {
                 UrlId = urlId,
+                AccessedAt = DateTime.UtcNow,
                 DeviceType = deviceType,
                 OS = os,
                 Browser = browser,

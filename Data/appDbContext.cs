@@ -9,5 +9,14 @@ namespace urlshorter.Data
 
         public DbSet<Url> Urls { get; set; }
         public DbSet<AccessLog> AccessLogs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AccessLog>()
+                .HasOne(al => al.Url)
+                .WithMany()
+                .HasForeignKey(al => al.UrlId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
