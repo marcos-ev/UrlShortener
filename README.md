@@ -27,7 +27,7 @@ Este projeto foi desenvolvido como parte de um teste de desenvolvedor, com o obj
 
 > Demonstração do funcionamento do sistema:
 
-![Demonstração do Funcionamento]([https://s7.ezgif.com/tmp/ezgif-7-9ca7687a3c.gif](https://s5.ezgif.com/tmp/ezgif-5-c93384a4c2.gif))
+![Demonstração do Funcionamento](https://s5.ezgif.com/tmp/ezgif-5-c93384a4c2.gif)
 
 
 ## Pré-requisitos
